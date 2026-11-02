@@ -1,0 +1,36 @@
+{"participant_id":"p01","session_id":"s1","turn_id":"t01","speaker":"interviewer","text":"SECTION: SLEEP"}
+{"participant_id":"p01","session_id":"s1","turn_id":"t02","speaker":"participant","text":"I keep a fairly regular sleep routine."}
+{"participant_id":"p01","session_id":"s1","turn_id":"t03","speaker":"interviewer","text":"SECTION: PLANNING"}
+{"participant_id":"p01","session_id":"s1","turn_id":"t04","speaker":"participant","text":"I usually follow the plans I make."}
+{"participant_id":"p01","session_id":"s1","turn_id":"t05","speaker":"interviewer","text":"SECTION: SUPPORT"}
+{"participant_id":"p01","session_id":"s1","turn_id":"t06","speaker":"participant","text":"I sometimes hesitate to ask a friend for help."}
+{"participant_id":"p02","session_id":"s1","turn_id":"t01","speaker":"interviewer","text":"SECTION: SLEEP"}
+{"participant_id":"p02","session_id":"s1","turn_id":"t02","speaker":"participant","text":"My sleep routine is disrupted once in a while."}
+{"participant_id":"p02","session_id":"s1","turn_id":"t03","speaker":"interviewer","text":"SECTION: PLANNING"}
+{"participant_id":"p02","session_id":"s1","turn_id":"t04","speaker":"participant","text":"I occasionally miss a plan when another task comes up."}
+{"participant_id":"p02","session_id":"s1","turn_id":"t05","speaker":"interviewer","text":"SECTION: SUPPORT"}
+{"participant_id":"p02","session_id":"s1","turn_id":"t06","speaker":"participant","text":"I am comfortable asking for support."}
+{"participant_id":"p03","session_id":"s1","turn_id":"t01","speaker":"interviewer","text":"SECTION: SLEEP"}
+{"participant_id":"p03","session_id":"s1","turn_id":"t02","speaker":"participant","text":"My sleep routine is disrupted most nights."}
+{"participant_id":"p03","session_id":"s1","turn_id":"t03","speaker":"interviewer","text":"SECTION: PLANNING"}
+{"participant_id":"p03","session_id":"s1","turn_id":"t04","speaker":"participant","text":"Sometimes my plans do not work out."}
+{"participant_id":"p03","session_id":"s1","turn_id":"t05","speaker":"interviewer","text":"SECTION: SUPPORT"}
+{"participant_id":"p03","session_id":"s1","turn_id":"t06","speaker":"participant","text":"I almost never feel able to ask for help."}
+{"participant_id":"p04","session_id":"s1","turn_id":"t01","speaker":"interviewer","text":"SECTION: SLEEP"}
+{"participant_id":"p04","session_id":"s1","turn_id":"t02","speaker":"participant","text":"My sleep routine is quite regular."}
+{"participant_id":"p04","session_id":"s1","turn_id":"t03","speaker":"interviewer","text":"SECTION: PLANNING"}
+{"participant_id":"p04","session_id":"s1","turn_id":"t04","speaker":"participant","text":"I frequently forget the plans I made."}
+{"participant_id":"p04","session_id":"s1","turn_id":"t05","speaker":"interviewer","text":"SECTION: SUPPORT"}
+{"participant_id":"p04","session_id":"s1","turn_id":"t06","speaker":"participant","text":"Some days I find it hard to ask for support."}
+{"participant_id":"p05","session_id":"s1","turn_id":"t01","speaker":"interviewer","text":"SECTION: SLEEP"}
+{"participant_id":"p05","session_id":"s1","turn_id":"t02","speaker":"participant","text":"I sometimes stay up later than I planned."}
+{"participant_id":"p05","session_id":"s1","turn_id":"t03","speaker":"interviewer","text":"SECTION: PLANNING"}
+{"participant_id":"p05","session_id":"s1","turn_id":"t04","speaker":"participant","text":"I usually complete what I planned."}
+{"participant_id":"p05","session_id":"s1","turn_id":"t05","speaker":"interviewer","text":"SECTION: SUPPORT"}
+{"participant_id":"p05","session_id":"s1","turn_id":"t06","speaker":"participant","text":"I usually find asking anyone for help difficult."}
+{"participant_id":"p06","session_id":"s1","turn_id":"t01","speaker":"interviewer","text":"SECTION: SLEEP"}
+{"participant_id":"p06","session_id":"s1","turn_id":"t02","speaker":"participant","text":"I rarely keep a regular sleep routine."}
+{"participant_id":"p06","session_id":"s1","turn_id":"t03","speaker":"interviewer","text":"SECTION: PLANNING"}
+{"participant_id":"p06","session_id":"s1","turn_id":"t04","speaker":"participant","text":"I miss most of the plans I make."}
+{"participant_id":"p06","session_id":"s1","turn_id":"t05","speaker":"interviewer","text":"SECTION: SUPPORT"}
+{"participant_id":"p06","session_id":"s1","turn_id":"t06","speaker":"participant","text":"I find it easy to ask a friend for help."}

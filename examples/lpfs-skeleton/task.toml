@@ -1,0 +1,168 @@
+# Structure-only task skeleton following the Level of Personality Functioning
+# Scale (LPFS; DSM-5 Section III, Criterion A): four elements, three facets each,
+# rated 0-4. Identity and self-direction form the self-functioning domain, and
+# empathy and intimacy the interpersonal-functioning domain. Before use, replace
+# the facet names with your instrument's labels and every PLACEHOLDER rubric with
+# the rubric text. Commands refuse placeholder rubrics (inspect the skeleton with
+# cilp task-check --allow-placeholders).
+
+[task]
+id = "lpfs_skeleton"
+construct = "personality functioning (LPFS structure)"
+version = "0-skeleton"
+labels = [0, 1, 2, 3, 4]
+participant_speaker = "participant"
+input_mode = "participant_only"
+evidence_mode = "section"
+adapter_strategy = "shared"
+
+[prompt]
+system = "You rate one facet of {construct} from a research interview. Use only the rubric and the participant's statements. Answer with a single integer from 0 to 4."
+user = "Facet: {target_name} ({target_id})\nRubric:\n{rubric}\n\nParticipant statements:\n{evidence}\n\nScore (0-4):"
+
+# Sections in interview order, one per facet, as in an interview that asks
+# about each facet in turn (the STiP-5.1 opens each facet with a standard
+# question). A start pattern may match that opening question in the
+# interviewer's turn, checked during transcript correction, or a marker the
+# reviewer inserts; the placeholders below stand for either. Several facets may
+# instead share a section, and a facet may list several sections.
+
+[[sections]]
+id = "identity_1"
+start_pattern = "^SECTION: IDENTITY 1$"
+
+[[sections]]
+id = "identity_2"
+start_pattern = "^SECTION: IDENTITY 2$"
+
+[[sections]]
+id = "identity_3"
+start_pattern = "^SECTION: IDENTITY 3$"
+
+[[sections]]
+id = "self_direction_1"
+start_pattern = "^SECTION: SELF-DIRECTION 1$"
+
+[[sections]]
+id = "self_direction_2"
+start_pattern = "^SECTION: SELF-DIRECTION 2$"
+
+[[sections]]
+id = "self_direction_3"
+start_pattern = "^SECTION: SELF-DIRECTION 3$"
+
+[[sections]]
+id = "empathy_1"
+start_pattern = "^SECTION: EMPATHY 1$"
+
+[[sections]]
+id = "empathy_2"
+start_pattern = "^SECTION: EMPATHY 2$"
+
+[[sections]]
+id = "empathy_3"
+start_pattern = "^SECTION: EMPATHY 3$"
+
+[[sections]]
+id = "intimacy_1"
+start_pattern = "^SECTION: INTIMACY 1$"
+
+[[sections]]
+id = "intimacy_2"
+start_pattern = "^SECTION: INTIMACY 2$"
+
+[[sections]]
+id = "intimacy_3"
+start_pattern = "^SECTION: INTIMACY 3$"
+
+# Boundary only. It ends the last rated section before the closing talk.
+[[sections]]
+id = "closing"
+start_pattern = "^SECTION: CLOSING$"
+
+# To rate element, domain, or total scores, add them as separate targets with
+# their own rubrics.
+
+[[targets]]
+id = "identity.1"
+name = "Identity, facet 1"
+group = "identity"
+rubric = "rubrics/identity_1.txt"
+sections = ["identity_1"]
+
+[[targets]]
+id = "identity.2"
+name = "Identity, facet 2"
+group = "identity"
+rubric = "rubrics/identity_2.txt"
+sections = ["identity_2"]
+
+[[targets]]
+id = "identity.3"
+name = "Identity, facet 3"
+group = "identity"
+rubric = "rubrics/identity_3.txt"
+sections = ["identity_3"]
+
+[[targets]]
+id = "self_direction.1"
+name = "Self-direction, facet 1"
+group = "self_direction"
+rubric = "rubrics/self_direction_1.txt"
+sections = ["self_direction_1"]
+
+[[targets]]
+id = "self_direction.2"
+name = "Self-direction, facet 2"
+group = "self_direction"
+rubric = "rubrics/self_direction_2.txt"
+sections = ["self_direction_2"]
+
+[[targets]]
+id = "self_direction.3"
+name = "Self-direction, facet 3"
+group = "self_direction"
+rubric = "rubrics/self_direction_3.txt"
+sections = ["self_direction_3"]
+
+[[targets]]
+id = "empathy.1"
+name = "Empathy, facet 1"
+group = "empathy"
+rubric = "rubrics/empathy_1.txt"
+sections = ["empathy_1"]
+
+[[targets]]
+id = "empathy.2"
+name = "Empathy, facet 2"
+group = "empathy"
+rubric = "rubrics/empathy_2.txt"
+sections = ["empathy_2"]
+
+[[targets]]
+id = "empathy.3"
+name = "Empathy, facet 3"
+group = "empathy"
+rubric = "rubrics/empathy_3.txt"
+sections = ["empathy_3"]
+
+[[targets]]
+id = "intimacy.1"
+name = "Intimacy, facet 1"
+group = "intimacy"
+rubric = "rubrics/intimacy_1.txt"
+sections = ["intimacy_1"]
+
+[[targets]]
+id = "intimacy.2"
+name = "Intimacy, facet 2"
+group = "intimacy"
+rubric = "rubrics/intimacy_2.txt"
+sections = ["intimacy_2"]
+
+[[targets]]
+id = "intimacy.3"
+name = "Intimacy, facet 3"
+group = "intimacy"
+rubric = "rubrics/intimacy_3.txt"
+sections = ["intimacy_3"]

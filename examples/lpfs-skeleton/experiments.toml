@@ -1,0 +1,16 @@
+[experiments]
+# One shared adapter for all 12 facets. Alternatives: "by_group" (one adapter per
+# element, 4 adapters) and "per_target" (12 adapters). Every strategy, learning
+# rate, epoch count, and seed added here multiplies the compared configurations.
+adapter_strategies = ["shared"]
+learning_rates = [0.0001]
+epochs = [1, 2]
+seeds = [42]
+objective = "token_ce"   # or "label_rps", the ordinal objective
+max_length = 8192        # fit to the model's context window and GPU memory
+batch_size = 1
+gradient_accumulation = 8
+lora_r = 16
+lora_alpha = 32
+lora_dropout = 0.05
+quantization = "4bit"

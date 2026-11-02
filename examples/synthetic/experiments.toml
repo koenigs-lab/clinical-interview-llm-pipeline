@@ -1,0 +1,13 @@
+[experiments]
+adapter_strategies = ["shared", "by_group", "per_target"]
+learning_rates = [0.0001, 0.0002]
+epochs = [1, 2]
+seeds = [42]
+objective = "token_ce"   # or "label_rps", the ordinal objective
+max_length = 2048
+batch_size = 1
+gradient_accumulation = 4
+lora_r = 8
+lora_alpha = 16
+lora_dropout = 0.05
+quantization = "4bit"

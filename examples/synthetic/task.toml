@@ -1,0 +1,34 @@
+[task]
+id = "fictional_everyday_functioning"
+construct = "Fictional everyday functioning"
+version = "1"
+labels = [0, 1, 2]
+participant_speaker = "participant"
+input_mode = "participant_only"
+evidence_mode = "section"
+adapter_strategy = "shared"
+
+[prompt]
+system = "You are testing a research pipeline for {construct}. The scale and interviews are invented. Return only one permitted integer."
+user = "Target: {target_name} ({target_id})\nRubric:\n{rubric}\n\nParticipant statements:\n{evidence}\n\nReturn one integer score."
+
+[[targets]]
+id = "routine.sleep"
+name = "Sleep routine"
+group = "routine"
+rubric = "rubrics/sleep.txt"
+section_pattern = "^SECTION: SLEEP$"
+
+[[targets]]
+id = "routine.planning"
+name = "Daily planning"
+group = "routine"
+rubric = "rubrics/planning.txt"
+section_pattern = "^SECTION: PLANNING$"
+
+[[targets]]
+id = "social.support"
+name = "Finding support"
+group = "social"
+rubric = "rubrics/support.txt"
+section_pattern = "^SECTION: SUPPORT$"

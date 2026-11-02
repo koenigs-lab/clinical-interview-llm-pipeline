@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the accompanying article and this software release."
+title: "Clinical Interview LLM Pipeline"
+type: software
+version: 0.3.0
+license: PolyForm-Noncommercial-1.0.0
+abstract: "Configurable, privacy-gated research workflow for interview-based clinical rating with local language models."
+authors:
+  - family-names: "Königs"
+    given-names: "Lukas"
+    affiliation: "Division of Clinical-Psychological Intervention, Department of Education and Psychology, Freie Universität Berlin, Berlin, Germany"
+    email: "lukas.koenigs@fu-berlin.de"
+    orcid: "https://orcid.org/0009-0004-6946-5145"
+  - family-names: "Heim"
+    given-names: "Phileas"
+    affiliation: "Division of Clinical-Psychological Intervention, Department of Education and Psychology, Freie Universität Berlin, Berlin, Germany; German Center for Mental Health (DZPG), partner site Berlin-Potsdam, Berlin/Potsdam, Germany"
+    orcid: "https://orcid.org/0009-0000-1830-7682"
+  - family-names: "Harder"
+    given-names: "Henry"
+    affiliation: "Department of Molecular Neuroimaging, Central Institute of Mental Health, Medical Faculty Mannheim, Heidelberg University, Mannheim, Germany; German Center for Mental Health (DZPG), partner site Mannheim-Heidelberg-Ulm, Mannheim, Germany"
+    orcid: "https://orcid.org/0000-0001-7672-3705"
+  - family-names: "Schmitz"
+    given-names: "Christian N."
+    affiliation: "Department of Molecular Neuroimaging, Central Institute of Mental Health, Medical Faculty Mannheim, Heidelberg University, Mannheim, Germany; German Center for Mental Health (DZPG), partner site Mannheim-Heidelberg-Ulm, Mannheim, Germany"
+    orcid: "https://orcid.org/0009-0005-1908-4026"
+  - family-names: "Böttche"
+    given-names: "Maria"
+    affiliation: "Division of Clinical-Psychological Intervention, Department of Education and Psychology, Freie Universität Berlin, Berlin, Germany; German Center for Mental Health (DZPG), partner site Berlin-Potsdam, Berlin/Potsdam, Germany"
+    orcid: "https://orcid.org/0009-0002-7568-3937"
+  - family-names: "Hutsebaut"
+    given-names: "Joost"
+    affiliation: "Tilburg School of Social and Behavioral Sciences, Department of Medical and Clinical Psychology, Tilburg, Netherlands"
+    orcid: "https://orcid.org/0000-0003-0189-3771"
+  - family-names: "Knaevelsrud"
+    given-names: "Christine"
+    affiliation: "Division of Clinical-Psychological Intervention, Department of Education and Psychology, Freie Universität Berlin, Berlin, Germany; German Center for Mental Health (DZPG), partner site Berlin-Potsdam, Berlin/Potsdam, Germany"
+    orcid: "https://orcid.org/0000-0003-1342-7006"
+  - family-names: "Kerber"
+    given-names: "André"
+    affiliation: "Division of Clinical-Psychological Intervention, Department of Education and Psychology, Freie Universität Berlin, Berlin, Germany; German Center for Mental Health (DZPG), partner site Berlin-Potsdam, Berlin/Potsdam, Germany"
+    email: "andre.kerber@fu-berlin.de"
+    orcid: "https://orcid.org/0000-0002-8588-7784"
+repository-code: "https://github.com/koenigs-lab/clinical-interview-llm-pipeline"
+keywords:
+  - clinical interviews
+  - language models
+  - research software
