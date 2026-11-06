@@ -1,5 +1,7 @@
 # Clinical Interview LLM Pipeline
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24011034.svg)](https://doi.org/10.5281/zenodo.24011034)
+
 Research software for rating clinical interviews with local language models. It turns locally held interview audio or transcripts into reviewed, participant-separated datasets, compares prompted and LoRA-adapted models on ordinal ratings, and hands the frozen model's outputs to human reviewers. The construct, rating scale, rubrics, and interview sections are defined in a task file, so the code assumes no particular instrument.
 
 The repository contains the code and fictional examples. The [workflow guide](docs/workflow.md) follows the seven stages of the accompanying manuscript.
