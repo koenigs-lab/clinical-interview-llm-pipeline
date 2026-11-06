@@ -3,6 +3,7 @@ message: "If you use this software, please cite the accompanying article and thi
 title: "Clinical Interview LLM Pipeline"
 type: software
 version: 0.3.0
+doi: 10.5281/zenodo.24011034
 license: PolyForm-Noncommercial-1.0.0
 abstract: "Configurable, privacy-gated research workflow for interview-based clinical rating with local language models."
 authors:
