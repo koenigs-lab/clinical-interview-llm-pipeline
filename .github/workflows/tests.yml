@@ -40,6 +40,11 @@ jobs:
       - name: Download tools for the bare container
         if: matrix.container
         run: apt-get update && apt-get install -y --no-install-recommends ca-certificates curl
+      - name: Installed Python for the Linux host
+        if: matrix.name == 'linux'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - uses: actions/checkout@v4
       - name: Set up with install.sh
         run: bash install.sh
