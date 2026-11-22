@@ -20,3 +20,28 @@ jobs:
         run: python -m unittest discover -s tests -v
         env:
           PYTHONPATH: src
+
+  install:
+    name: install (${{ matrix.name }})
+    runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux
+            os: ubuntu-latest
+          - name: macos
+            os: macos-latest
+          - name: linux without python
+            os: ubuntu-latest
+            container: ubuntu:24.04
+    steps:
+      - name: Download tools for the bare container
+        if: matrix.container
+        run: apt-get update && apt-get install -y --no-install-recommends ca-certificates curl
+      - uses: actions/checkout@v4
+      - name: Set up with install.sh
+        run: bash install.sh
+      - name: Run cilp from the environment
+        run: .venv/bin/cilp --version

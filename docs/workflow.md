@@ -27,7 +27,7 @@ cilp align-speakers --transcript /secure/turns/p001_asr.jsonl --intervals /secur
 cilp speaker-map --transcript /secure/turns/p001_aligned.jsonl --mapping /secure/review/p001_speakers.csv --output /secure/turns/p001_mapped.jsonl
 ```
 
-- `transcribe` uses a local faster-whisper model with word timestamps and leaves every speaker `unknown`. `diarize` runs a complete local pyannote 4 pipeline with Hugging Face Hub access disabled. Both load their models from local paths.
+- `transcribe` uses a local faster-whisper model with word timestamps and leaves every speaker `unknown`. `diarize` runs a complete local pyannote 4 pipeline with Hugging Face Hub access disabled. Both load their models from local folders ([model formats](../README.md#models)).
 - Both need an explicit device. `--gpu N` runs on one GPU inside the safety wrapper (`--dry-run` shows the wrapped call), and `--cpu` runs, more slowly, on a host without a GPU. `transcribe` also takes `--compute-type`, `--cpu-threads`, and `--beam-size`. The settings are recorded in the output's `.meta.json`, because compute type and device can change transcripts slightly.
 - `align-speakers` gives a word a speaker only if that speaker alone overlaps it and covers more than half of it. Coverage counts a collar of 0.25 s around the speaker's intervals (`--collar`), because ASR word times and speaker boundaries rarely agree exactly. Words overlapping two speakers stay `unknown`. The mapping CSV (`diarized_speaker,role`, e.g. `SPEAKER_00,interviewer`) is a reviewed proposal, and individual turns may still need correction.
 - For an already corrected transcript in TSV form (`start,end,speaker,segment`), use `cilp import-tsv` for the initial and the corrected version.
@@ -54,7 +54,7 @@ cilp privacy-propose --transcript /secure/turns/all_corrected.jsonl --transcript
 ```
 
 - The model reads batches of consecutive turns from one transcript, as many as fit `--context-tokens` (default 4096) and at most `--rows-per-batch` (default 20), and returns the identifiers in each turn: persons, e-mail addresses, phone numbers, dates, addresses, and IDs. `--indirect` adds organizations, locations, occupations, and rare events. A batch is smaller when the answer for all its turns would not fit, and an answer cut off at the length limit is asked again in two halves. `--patterns` also adds deterministic matches for e-mail addresses, phone numbers, and URLs.
-- Use a large instruction-tuned model. We recommend Llama 3 70B Instruct, served by llama.cpp or another OpenAI-compatible server on the same machine at a loopback `/v1` endpoint. `--model` must name a model the server reports at `/v1/models`, and the mapping's metadata records it.
+- Use a large instruction-tuned model. We recommend Llama 3 70B Instruct, served by llama.cpp or another OpenAI-compatible server on the same machine at a loopback `/v1` endpoint, for example as a GGUF file in `llama-server` or as an Ollama model (`--endpoint http://127.0.0.1:11434/v1`). `--model` must name a model the server reports at `/v1/models`, and the mapping's metadata records it.
 - The mapping file has one row per distinct text and transcript: `type`, `original`, a typed `token` such as `PERSON_0001`, the number of `occurrences` in the transcript (0 means the model's text does not occur verbatim), and an empty `anonymize` column. It is bound to the transcript approval.
 - Review the mapping **in place**. Set `anonymize` to 1 (replace) or 0 (keep) in every row. Proposed rows stay in the file. Edit a token where a description preserves rating-relevant meaning better (for example `a small town`), and add rows for identifiers the search missed, including inflected or shortened forms.
 
@@ -96,9 +96,18 @@ cilp train --plan /secure/plans/comparison.json --job JOB_NAME --gpu 0 --watch-d
 cilp train --plan /secure/plans/comparison.json --job JOB_NAME --gpu 0 --watch-disk-path /secure --safety-log-dir /secure/safety
 ```
 
+- `--model-path` is the local folder of an instruction-tuned chat model in Hugging Face format, with `*.safetensors` weights ([model formats](../README.md#models)).
 - The experiment file varies adapter strategy, learning rate, epochs, and seed. LoRA settings, maximum length, quantization, and the training objective are fixed per file ([adapting a task](adapting-a-task.md#adapters-experiments-and-training-objective)). The plan records task, rubric, and data hashes and refuses changed inputs. Record how many configurations you compare.
 - `plan` loads the model's tokenizer on the CPU and records in the plan how many training and validation examples exceed `max_length`, by target and label. Training skips such examples, and prediction marks them `too_long`, which counts as the worst possible error. Raise `max_length` or narrow the evidence until no validation example is too long. On a host without the model, `--skip-length-check` leaves the count out.
-- `train` runs inside the safety wrapper, which checks GPU and CPU temperature, memory, disk, startup load, and power caps and logs to `--safety-log-dir`. Run the smallest job first. Concurrent jobs need disjoint GPU indices and separate log directories. Check the wrapper's UUID mapping.
+- `train` runs inside the safety wrapper, which checks GPU and CPU temperature, memory, disk, startup load, and power caps and logs to `--safety-log-dir`. Run the smallest job first.
+- Each job uses one GPU, and several GPUs train several jobs at once. Start each job in its own terminal or tmux window, with its own GPU index and log folder:
+
+  ```bash
+  cilp train --plan /secure/plans/comparison.json --job JOB_A --gpu 0 --watch-disk-path /secure --safety-log-dir /secure/safety/gpu0
+  cilp train --plan /secure/plans/comparison.json --job JOB_B --gpu 1 --watch-disk-path /secure --safety-log-dir /secure/safety/gpu1
+  ```
+
+  `--gpu` takes the index that `nvidia-smi` lists. The wrapper passes that GPU to the job by its UUID, because CUDA may number the GPUs differently, and the run's `env.log` records the mapping. The plan file lists the job names under `jobs`. `predict` runs side by side in the same way.
 - Each run's `result.json` records loss per epoch as a diagnostic (selection uses `evaluate`) and counts examples skipped for exceeding `max_length` by target and label.
 
 ## B.3 Model comparison and selection

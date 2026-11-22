@@ -14,29 +14,66 @@ The repository contains the code and fictional examples. The [workflow guide](do
 - The `parent` field of a target is metadata only. Element, domain, or total scores are not computed.
 - The freeze before test access is enforced by the commands but cannot stop anyone from opening files directly.
 
-## Install and test
+## Install
 
-Python 3.11 or newer. The core commands use only the standard library. Install the optional dependencies for the steps you run.
+1. Get the code. On GitHub, choose *Code → Download ZIP* and unzip it, or run `git clone https://github.com/koenigs-lab/clinical-interview-llm-pipeline.git`.
+2. Open a terminal in the folder. On macOS, open Terminal, type `cd ` followed by a space, drag the folder onto the window, and press Return.
+3. Run the installer:
 
 ```bash
-python3 -m venv .venv
+bash install.sh
+```
+
+The installer uses Python 3.11 to 3.13 if one is installed and otherwise downloads Python 3.12 into the folder. It creates the environment `.venv`, installs the pipeline, runs the tests, and ends with `cilp --help`. Add the optional parts you need after `install.sh`, or `all` for every part:
+
+```bash
+bash install.sh asr       # local faster-whisper transcription
+bash install.sh diarize   # local pyannote diarization, which also needs FFmpeg
+bash install.sh train     # LoRA training and prediction on Linux with an NVIDIA GPU
+```
+
+In every new terminal, activate the environment from the folder with `source .venv/bin/activate`. On Windows, the same steps run in WSL (Windows Subsystem for Linux).
+
+A manual set-up needs Python 3.11 or newer. The core commands use only the standard library.
+
+```bash
+python3.12 -m venv .venv                       # any Python 3.11 or newer
 source .venv/bin/activate
-python -m pip install -e .
+python -m pip install -e .                     # or -e '.[asr,diarize,train]'
 python -m unittest discover -s tests
-python -m pip install -e '.[asr]'       # local faster-whisper transcription
-python -m pip install -e '.[diarize]'   # local pyannote diarization
-python -m pip install -e '.[train]'     # LoRA training and prediction (CUDA)
 ```
 
 ## Hardware
 
-Data preparation, review, dataset construction, and evaluation run on an ordinary CPU. Transcription and diarization run on a GPU, or on the CPU of a host without one. Training and prediction need an NVIDIA GPU with enough memory for the chosen model, and the identifier search needs a local model server, which for large models also means GPUs. Depending on the server, its set-up, and its capacity, GPU jobs run one after another or side by side on separate GPUs. Each GPU job uses one GPU and runs inside the bundled safety wrapper, which checks temperature, memory, disk space, and power limits.
+Data preparation, review, dataset construction, and evaluation run on an ordinary CPU. Transcription and diarization run on a GPU, or on the CPU of a host without one. Training and prediction need an NVIDIA GPU with enough memory for the chosen model, and the identifier search needs a local model server, which for large models also means GPUs. Each GPU job uses one GPU and runs inside the bundled safety wrapper, which checks temperature, memory, disk space, and power limits. On a host with several GPUs, jobs run side by side, one per GPU ([B.2](docs/workflow.md#b2-optional-parameter-efficient-adaptation)).
+
+## Models
+
+All models are read from local storage, and each step expects its own format:
+
+| Step | Option | Model |
+| --- | --- | --- |
+| `transcribe` | `--local-model` | Folder of a faster-whisper model in CTranslate2 format, e.g. `Systran/faster-whisper-large-v3` |
+| `diarize` | `--local-pipeline` | Folder of a pyannote 4 pipeline with its `config.yaml`, e.g. `pyannote/speaker-diarization-community-1` |
+| `privacy-propose` | `--model`, `--endpoint` | Name of a chat model on a local OpenAI-compatible server, e.g. a GGUF file in llama.cpp's `llama-server`, or a model in Ollama (`--endpoint http://127.0.0.1:11434/v1`) |
+| `plan`, `train`, `predict` | `--model-path` | Folder of an instruction-tuned chat model in Hugging Face Transformers format: `config.json`, `*.safetensors` weights, and tokenizer files with a chat template, e.g. `meta-llama/Meta-Llama-3-8B-Instruct` |
+
+A GGUF file serves only the identifier search, through llama.cpp or Ollama. Training and prediction need the Hugging Face folder. With `quantization = "4bit"` in the experiment file, they quantize its weights to 4 bit while loading them onto the GPU. A snapshot folder in the Hugging Face cache works as well. The `hf` command, installed with any optional part, downloads the folders once:
+
+```bash
+hf download Systran/faster-whisper-large-v3 --local-dir /secure/models/asr
+hf download pyannote/speaker-diarization-community-1 --local-dir /secure/models/pyannote-local
+hf download meta-llama/Meta-Llama-3-8B-Instruct --exclude 'original/*' --local-dir /secure/models/local-chat-model
+```
+
+Gated models, such as the pyannote pipeline and Llama, need a Hugging Face account that has accepted their conditions, and `hf auth login` once.
 
 ## Fictional example
 
 Six invented participants, three invented targets, a three-point scale. Generated files go to the ignored `data/` directory.
 
 ```bash
+source .venv/bin/activate   # once per terminal
 mkdir -p data/demo
 cilp task-check --task examples/synthetic/task.toml
 # Attests the review of the fictional turns.
@@ -68,6 +105,7 @@ Training, prediction, model selection, the freeze, and human review are describe
 
 ## Layout
 
+- `install.sh`: set-up of Python, the environment, and the pipeline.
 - `src/clinical_interview_pipeline/`: file formats, transcription and diarization adapters, review and privacy gates, splitting, training, evaluation, and the `cilp` command.
 - `src/clinical_interview_pipeline/resources/safe_gpu_run.sh`: GPU watchdog and resource checks.
 - `examples/`: the fictional task and an LPFS task skeleton.
@@ -75,7 +113,7 @@ Training, prediction, model selection, the freeze, and human review are describe
 
 ## Citation
 
-If you use the pipeline, please cite the accompanying article and the archived release. [`CITATION.cff`](CITATION.cff) holds the citation metadata, which GitHub shows under *Cite this repository*.
+If you use the pipeline, please cite the accompanying article and the archived release. [`CITATION.cff`](CITATION.cff) holds the citation metadata, which GitHub shows under *Cite this repository*. The DOI badge leads to the newest release on Zenodo, and each release has its own DOI on its Zenodo page.
 
 ## License
 
