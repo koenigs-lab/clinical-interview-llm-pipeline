@@ -157,8 +157,14 @@ step "Installing the pipeline${EXTRAS:+ with $EXTRAS}"
 
 step "Running the tests"
 if ! tests="$("$PY" -m unittest discover -s tests 2>&1)"; then
-    printf '%s\n' "$tests" | tail -n 40
-    fail "Some tests failed. The messages above show which."
+    # The test report starts at the first ====== line. Command output fills the rest.
+    report="$(printf '%s\n' "$tests" | awk '/^======/ { show = 1 } show { print } /^FAILED/ { exit }')"
+    if [ -n "$report" ]; then
+        printf '%s\n' "$report"
+    else
+        printf '%s\n' "$tests" | tail -n 40
+    fi
+    fail "Some tests failed. The report above names them."
 fi
 printf '%s\n' "$tests" | grep -E '^(Ran [0-9]+ tests|OK)' || true
 
