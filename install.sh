@@ -167,9 +167,16 @@ step "Checking the cilp command"
 
 case ",$EXTRAS," in
     *",train,"*)
+        say ""
         if [ "$SYSTEM" = Darwin ]; then
-            say ""
             say "Note: training and prediction need Linux with an NVIDIA GPU. On this Mac, the train part gives cilp plan its length check."
+        elif ! command -v nvidia-smi >/dev/null 2>&1; then
+            say "Note: no NVIDIA driver was found (nvidia-smi). Training and prediction need an NVIDIA GPU."
+        elif gpus="$("$PY" -c 'import torch; print(torch.cuda.device_count() if torch.cuda.is_available() else 0)' 2>/dev/null)" \
+            && [ "${gpus:-0}" -gt 0 ]; then
+            say "PyTorch sees $gpus GPU(s) for training and prediction."
+        else
+            say "Note: PyTorch cannot reach the GPU. Its CUDA version may need a newer NVIDIA driver than the one nvidia-smi shows. The PyTorch website lists builds for older drivers."
         fi
         ;;
 esac
