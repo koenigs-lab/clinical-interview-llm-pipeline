@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "clinical-interview-llm-pipeline"
-version = "0.3.0"
+version = "0.3.1"
 description = "Institution-controlled workflow for configurable interview-based clinical rating research"
 readme = "README.md"
 requires-python = ">=3.11"
