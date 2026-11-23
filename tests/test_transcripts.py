@@ -136,6 +136,9 @@ class TranscriptTest(WorkspaceTest):
         with patch.dict(os.environ, {}, clear=False), \
                 patch.dict(sys.modules, self._fake_pyannote(devices)), \
                 patch("clinical_interview_pipeline.diarization.version", return_value="4.test"):
+            # With the optional parts installed, an earlier test may have loaded the real
+            # Hugging Face library. patch.dict restores it after this test.
+            sys.modules.pop("huggingface_hub", None)
             self.assertEqual(diarize_audio(self.audio, pipeline_dir, self.root / "a.jsonl"), 1)
             self.assertEqual(os.environ["HF_HUB_OFFLINE"], "1")
             with self.assertRaises(RuntimeError):
